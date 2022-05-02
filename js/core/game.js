@@ -57,8 +57,11 @@ export default class Game {
     draw(deltaTime) {
         this.clear()
 
-        this.ravens.forEach((raven) => {
-            raven.draw(this.ctx)
+        const drawable = [
+            ...this.ravens
+        ]
+        drawable.forEach((object) => {
+            object.draw(this.ctx)
         })
 
         if (this.isOver) {
