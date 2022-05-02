@@ -1,10 +1,10 @@
 let lastTime = 0
-export const animate = (timestamp, game) => {
+export const animate = (game, timestamp = 0) => {
     const deltaTime = timestamp - lastTime
     lastTime = timestamp
     game.update(deltaTime)
     game.draw(deltaTime)
-    requestAnimationFrame(timestamp => animate(timestamp, game))
+    requestAnimationFrame((timestamp) => animate(game, timestamp))
 }
 
 export const getRandomNumber = (min, max) => {
