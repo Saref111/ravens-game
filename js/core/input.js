@@ -3,9 +3,11 @@ export default class InputHandler {
         this.game = game
         this.canvas = game.canvas
         this.ctx = game.ctx
+        this.collCtx = game.collCtx
         this.canvasPosition = this.canvas.getBoundingClientRect()
 
         window.addEventListener('click', this.handleClick.bind(this))
+        window.addEventListener('touchstart', this.handleClick.bind(this))
     }
 
     handleClick(event) {
@@ -13,7 +15,7 @@ export default class InputHandler {
         const y = event.clientY - this.canvasPosition.y
         
         if (!this.game.isOver) { 
-            // this.game.checkthis.ctx.getImageData(x, y, 1, 1).data
+            this.game.checkCollisionByColor(this.collCtx.getImageData(x, y, 1, 1).data)
         }
     }
 }

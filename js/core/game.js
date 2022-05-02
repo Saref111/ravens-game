@@ -4,18 +4,20 @@ export default class Game {
     constructor() {
         this.isOver = false 
         this.canvas = null
+        this.collisionCanvas = null
         this.ctx = null
+        this.collCtx = null
         this.timeToNewRaven = 0
         this.ravenInterval = 500
         this.ravens = []
 
         this.scores = 0
         
-        this.setCanvas()
+        this.setCanvases()
         this.input = new InputHandler(this)
     }
     
-    setCanvas() {
+    setCanvases() {
         this.collisionCanvas = document.createElement('canvas')
         this.collisionCanvas.width = window.innerWidth
         this.collisionCanvas.height = window.innerHeight
@@ -27,6 +29,22 @@ export default class Game {
         this.canvas.height = window.innerHeight
         this.ctx = this.canvas.getContext('2d')
         document.body.appendChild(this.canvas)
+    }
+
+    removeRaven(index) {
+        this.ravens.splice(index, 1)
+    }
+
+    checkCollisionByColor(colorArray) {
+        const [r, g, b] = colorArray
+        const ravens = [...this.ravens]
+
+        ravens.forEach((raven, i) => {
+            if (r === raven.color[0] && g === raven.color[1] && b === raven.color[2]) {
+                this.removeRaven(i)
+                this.scores++
+            }
+        })
     }
 
     drawScores() {
