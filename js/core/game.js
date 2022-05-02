@@ -3,6 +3,8 @@ export default class Game {
     constructor() {
         this.canvas = null
         this.ctx = null
+        this.timeToNewRaven = 0
+        this.ravenInterval = 500
         this.ravens = []
 
         this.setCanvas()
@@ -16,14 +18,24 @@ export default class Game {
         document.body.appendChild(this.canvas)
     }
 
-    update(deltaTime) {
-        if (this.ravens.length == 0) {
+    handleRavens(deltaTime) {
+        this.timeToNewRaven += deltaTime
+
+        if (this.timeToNewRaven >= this.ravenInterval) {
             this.ravens.push(new Raven(this))
+            this.timeToNewRaven = 0
         }
 
         this.ravens.forEach((raven) => {
             raven.update(deltaTime)
         })
+
+        this.ravens = this.ravens.filter((raven) => !(raven.x + raven.width < 0))
+    }
+
+    update(deltaTime) {
+        this.handleRavens(deltaTime)
+        
     }
 
     draw(deltaTime) {

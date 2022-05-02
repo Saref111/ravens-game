@@ -12,9 +12,21 @@ export default class Raven {
         this.speedY = getRandomNumber(-2.5, 2.5)
     }
 
+    amendSpeed() {
+        if (this.y + this.height >= this.game.canvas.height) {
+            this.speedY = -this.speedY
+        } 
+
+        if (this.y <= 0) {
+            this.speedY = -this.speedY
+        }
+    }
+
     update(deltaTime) {
         this.x -= this.speedX
         this.y -= this.speedY
+
+        this.amendSpeed()
     }
 
     draw(ctx) {
