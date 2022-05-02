@@ -9,9 +9,11 @@ export default class InputHandler {
     }
 
     handleClick(event) {
-        const x = event.clientX - this.canvasPosition.left
-        const y = event.clientY - this.canvasPosition.top
-
-        console.log(this.ctx.getImageData(x, y, 1, 1).data);
+        const x = event.clientX - this.canvasPosition.x
+        const y = event.clientY - this.canvasPosition.y
+        
+        if (!this.game.isOver) { 
+            // this.game.checkthis.ctx.getImageData(x, y, 1, 1).data
+        }
     }
 }

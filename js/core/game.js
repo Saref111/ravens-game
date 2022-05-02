@@ -21,6 +21,12 @@ export default class Game {
         this.canvas.height = window.innerHeight
         this.ctx = this.canvas.getContext('2d')
         document.body.appendChild(this.canvas)
+
+        this.collisionCanvas = document.createElement('canvas')
+        this.collisionCanvas.width = window.innerWidth
+        this.collisionCanvas.height = window.innerHeight
+        this.collCtx = this.canvas.getContext('2d')
+        document.body.appendChild(this.canvas)
     }
 
     drawScores() {
@@ -75,7 +81,7 @@ export default class Game {
             ...this.ravens
         ]
         drawable.forEach((object) => {
-            object.draw(this.ctx)
+            object.draw(this.ctx, this.collCtx)
         })
 
         this.drawScores()

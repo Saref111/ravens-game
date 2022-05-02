@@ -5,5 +5,3 @@ const game = new Game()
 
 animate(game)
 
-
-

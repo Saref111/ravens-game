@@ -1,5 +1,5 @@
 import { RavenEnum, FPS, speedIntervals } from "../consts.js";
-import { getRandomNumber } from "../utils.js";
+import { getRandomNumber, getRandomColorArray } from "../utils.js";
 
 export default class Raven {
     constructor(game) {
@@ -17,6 +17,7 @@ export default class Raven {
         this.maxFrameX = RavenEnum.MAX_FRAME_X
         this.frameCount = 0
         this.frameInterval = 1000 / FPS
+        this.color = getRandomColorArray()
     }
 
     amendSpeed() {
@@ -45,7 +46,9 @@ export default class Raven {
         this.amendSpeed()
     }
 
-    draw(ctx) {
+    draw(ctx, collCtx) {
+        collCtx.fillStyle = `rgb(${this.color.join(',')})`
+        collCtx.fillRect(this.x, this.y, this.width, this.height)
         ctx.drawImage(
             this.image,
             this.frameX * this.width,
