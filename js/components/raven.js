@@ -30,7 +30,7 @@ export default class Raven {
     }
 
     draw(ctx) {
-        ctx.fillColor = '#000'
+        ctx.fillStyle = '#000'
         ctx.fillRect(this.x, this.y, this.width, this.height)
     }
 }
