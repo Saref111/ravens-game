@@ -1,3 +1,4 @@
+import InputHandler from "./input.js"
 import Raven from "../components/raven.js"
 export default class Game {
     constructor() {
@@ -8,7 +9,10 @@ export default class Game {
         this.ravenInterval = 500
         this.ravens = []
 
+        this.scores = 0
+        
         this.setCanvas()
+        this.input = new InputHandler(this)
     }
     
     setCanvas() {
@@ -19,10 +23,20 @@ export default class Game {
         document.body.appendChild(this.canvas)
     }
 
+    drawScores() {
+        this.ctx.fillStyle = '#000'
+        this.ctx.font = '30px Impact'
+        this.ctx.fillText(
+            `Score: ${this.scores}`, 
+            10, 
+            30
+        )
+    }
+
     handleGameOver() {  
         const text = 'Game Over'
         this.ctx.fillStyle = '#000'
-        this.ctx.font = '90px Arial'
+        this.ctx.font = '90px Impact'
         const textWidth = this.ctx.measureText(text).width
 
         this.ctx.fillText(
@@ -63,6 +77,8 @@ export default class Game {
         drawable.forEach((object) => {
             object.draw(this.ctx)
         })
+
+        this.drawScores()
 
         if (this.isOver) {
             this.handleGameOver()
