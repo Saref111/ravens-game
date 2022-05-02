@@ -6,3 +6,11 @@ export const RavenEnum = {
 }
 
 export const FPS = 60
+
+export const speedIntervals = {
+    5: 16,
+    4: 33,
+    3: 50,
+    2: 66,
+    1: 83,
+}

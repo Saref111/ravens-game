@@ -1,4 +1,4 @@
-import { RavenEnum, FPS } from "../consts.js";
+import { RavenEnum, FPS, speedIntervals } from "../consts.js";
 import { getRandomNumber } from "../utils.js";
 
 export default class Raven {
@@ -8,7 +8,7 @@ export default class Raven {
         this.height = RavenEnum.HEIGHT
         this.x = this.game.canvas.width
         this.y = getRandomNumber(0, this.game.canvas.height - this.height)
-        this.speedX = getRandomNumber(0, 4)
+        this.speedX = getRandomNumber(1, 5)
         this.speedY = getRandomNumber(-2.5, 2.5)
 
         this.image = new Image()
@@ -32,9 +32,9 @@ export default class Raven {
     update(deltaTime) {
         this.x -= this.speedX
         this.y -= this.speedY
-
         this.frameCount += deltaTime
-        if (this.frameCount >= this.frameInterval / this.speedX) {
+
+        if (this.frameCount >= speedIntervals[this.speedX]) {
             this.frameCount = 0
             this.frameX += 1
             if (this.frameX >= this.maxFrameX) {
@@ -46,9 +46,6 @@ export default class Raven {
     }
 
     draw(ctx) {
-        // ctx.fillStyle = '#000'
-        // ctx.fillRect(this.x, this.y, this.width, this.height)
-
         ctx.drawImage(
             this.image,
             this.frameX * this.width,
