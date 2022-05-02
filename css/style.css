@@ -1,0 +1,19 @@
+*, 
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    display: flex;
+}
+
+canvas {
+    width: 100vh;
+    height: 100vh;
+}
