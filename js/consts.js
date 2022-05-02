@@ -4,8 +4,14 @@ export const RavenEnum = {
     MAX_FRAME_X: 6,
     SPRITE_SRC: './assets/raven.png',
 }
+export const BoomEnum = {
+    WIDTH: 100,
+    HEIGHT: 90,
+    MAX_FRAME_X: 5,
+    SPRITE_SRC: './assets/boom.png',
+}
 
-export const FPS = 60
+export const FPS = 4
 
 export const speedIntervals = {
     5: 16,

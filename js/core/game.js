@@ -1,5 +1,6 @@
 import InputHandler from "./input.js"
 import Raven from "../components/raven.js"
+import Boom from "../components/boom.js"
 export default class Game {
     constructor() {
         this.isOver = false 
@@ -10,7 +11,7 @@ export default class Game {
         this.timeToNewRaven = 0
         this.ravenInterval = 500
         this.ravens = []
-
+        this.booms = []
         this.scores = 0
         
         this.setCanvases()
@@ -20,6 +21,7 @@ export default class Game {
     setCanvases() {
         this.collisionCanvas = document.createElement('canvas')
         this.collisionCanvas.width = window.innerWidth
+        this.collisionCanvas.style.opacity = 0
         this.collisionCanvas.height = window.innerHeight
         this.collCtx = this.collisionCanvas.getContext('2d')
         document.body.appendChild(this.collisionCanvas)
@@ -29,6 +31,11 @@ export default class Game {
         this.canvas.height = window.innerHeight
         this.ctx = this.canvas.getContext('2d')
         document.body.appendChild(this.canvas)
+    }
+
+    addBoom({x, y, size}) {
+        this.booms.push(new Boom(x, y, size))
+        console.log(this.booms);
     }
 
     removeRaven(index) {
@@ -41,6 +48,7 @@ export default class Game {
 
         ravens.forEach((raven, i) => {
             if (r === raven.color[0] && g === raven.color[1] && b === raven.color[2]) {
+                this.addBoom(raven)
                 this.removeRaven(i)
                 this.scores++
             }
@@ -89,16 +97,26 @@ export default class Game {
 
     }
 
+    handleBooms(deltaTime) {
+        this.booms.forEach((boom, i) => {
+            boom.update(deltaTime)
+            if (boom.isOver) {
+                this.booms.splice(i, 1)
+            }
+        })
+    }
+
     update(deltaTime) {
         this.handleRavens(deltaTime)
-        
+        this.handleBooms(deltaTime)
     }
 
     draw(deltaTime) {
         this.clear()
 
         const drawable = [
-            ...this.ravens
+            ...this.ravens,
+            ...this.booms
         ]
         drawable.forEach((object) => {
             object.draw(this.ctx, this.collCtx)
