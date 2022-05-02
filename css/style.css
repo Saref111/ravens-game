@@ -10,7 +10,26 @@ html {
 
 body {
     margin: 0;
+    background-image: url('../assets/bg.png');
+    background-size: 100vw 100vh;
+
 }
+
+body::after{
+    content: 'Click to start';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 90px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: #fff;
+}
+
+body.started::after{
+    content: '';
+}
+
 
 canvas {
     position: fixed;

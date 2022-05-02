@@ -16,6 +16,17 @@ export default class Game {
         
         this.setCanvases()
         this.input = new InputHandler(this)
+
+        this.bg = new Image()
+        this.bg.src = './assets/bg.png'
+        this.bgAudio = new Audio()
+        this.bgAudio.src = './assets/bg.mp3'
+        this.bgAudio.loop = true
+        this.bgAudio.volume = 0.5
+
+        this.bgAudio.oncanplay = () => {
+            this.bgAudio.play()
+        }
     }
     
     setCanvases() {
@@ -55,7 +66,7 @@ export default class Game {
     }
 
     drawScores() {
-        this.ctx.fillStyle = '#000'
+        this.ctx.fillStyle = '#fff'
         this.ctx.font = '30px Impact'
         this.ctx.fillText(
             `Score: ${this.scores}`, 
@@ -66,14 +77,21 @@ export default class Game {
 
     handleGameOver() {  
         const text = 'Game Over'
-        this.ctx.fillStyle = '#000'
+        const restartText = 'Press F5 to restart'
+        this.ctx.fillStyle = '#fff'
         this.ctx.font = '90px Impact'
-        const textWidth = this.ctx.measureText(text).width
+        const textInfo = this.ctx.measureText(text)
+        const restartTextInfo = this.ctx.measureText(restartText)
 
         this.ctx.fillText(
             text, 
-            this.canvas.width / 2 - textWidth / 2, 
-            this.canvas.height / 2
+            this.canvas.width / 2 - textInfo.width / 2, 
+            this.canvas.height / 2 - 90 
+        )
+        this.ctx.fillText(
+            restartText, 
+            this.canvas.width / 2 - restartTextInfo.width / 2, 
+            this.canvas.height / 2 + 90
         )
     }
 
@@ -112,6 +130,7 @@ export default class Game {
 
     draw(deltaTime) {
         this.clear()
+        this.drawBg()
 
         const drawable = [
             ...this.ravens,
@@ -131,5 +150,11 @@ export default class Game {
     clear() {
         this.collCtx.clearRect(0, 0, this.collisionCanvas.width, this.collisionCanvas.height)
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    }
+
+    drawBg() {
+        this.ctx.globalAlpha = 0.8
+        this.ctx.drawImage(this.bg, 0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.globalAlpha = 1
     }
 }

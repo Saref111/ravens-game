@@ -1,7 +1,12 @@
 import { animate } from "./utils.js"
 import Game from "./core/game.js"
 
-const game = new Game()
+const init = () => {
+    const game = new Game()
+    animate(game)
+    document.removeEventListener('click', init)
+    document.body.classList.add('started')
+}
 
-animate(game)
+document.addEventListener('click', init)
 
