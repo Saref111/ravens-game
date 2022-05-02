@@ -1,15 +1,16 @@
 import { RavenEnum, FPS, speedIntervals } from "../consts.js";
-import { getRandomNumber, getRandomColorArray } from "../utils.js";
+import { getRandomNumber, getRandomColorArray, getRandomFloat } from "../utils.js";
 
 export default class Raven {
     constructor(game) {
         this.game = game
         this.width = RavenEnum.WIDTH
         this.height = RavenEnum.HEIGHT
+        this.size = getRandomFloat(0.3, 1)
         this.x = this.game.canvas.width
         this.y = getRandomNumber(0, this.game.canvas.height - this.height)
         this.speedX = getRandomNumber(1, 5)
-        this.speedY = getRandomNumber(-2.5, 2.5)
+        this.speedY = getRandomFloat(-2.5, 2.5)
 
         this.image = new Image()
         this.image.src = RavenEnum.SPRITE_SRC
@@ -48,17 +49,17 @@ export default class Raven {
 
     draw(ctx, collCtx) {
         collCtx.fillStyle = `rgb(${this.color.join(',')})`
-        collCtx.fillRect(this.x, this.y, this.width, this.height)
+        collCtx.fillRect(this.x, this.y, this.width * this.size, this.height * this.size)
         ctx.drawImage(
             this.image,
             this.frameX * this.width,
             0,
-            this.width,
+            this.width ,
             this.height,
             this.x,
             this.y,
-            this.width,
-            this.height
+            this.width * this.size,
+            this.height * this.size
         )
     }
 }

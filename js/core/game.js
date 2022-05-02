@@ -16,16 +16,16 @@ export default class Game {
     }
     
     setCanvas() {
+        this.collisionCanvas = document.createElement('canvas')
+        this.collisionCanvas.width = window.innerWidth
+        this.collisionCanvas.height = window.innerHeight
+        this.collCtx = this.collisionCanvas.getContext('2d')
+        document.body.appendChild(this.collisionCanvas)
+
         this.canvas = document.createElement('canvas')
         this.canvas.width = window.innerWidth
         this.canvas.height = window.innerHeight
         this.ctx = this.canvas.getContext('2d')
-        document.body.appendChild(this.canvas)
-
-        this.collisionCanvas = document.createElement('canvas')
-        this.collisionCanvas.width = window.innerWidth
-        this.collisionCanvas.height = window.innerHeight
-        this.collCtx = this.canvas.getContext('2d')
         document.body.appendChild(this.canvas)
     }
 
@@ -57,6 +57,7 @@ export default class Game {
 
         if (this.timeToNewRaven >= this.ravenInterval) {
             this.ravens.push(new Raven(this))
+            this.ravens.sort((a, b) => a.width - b.width)
             this.timeToNewRaven = 0
         }
         
@@ -67,6 +68,7 @@ export default class Game {
                 this.isOver = true
             }
         })
+
     }
 
     update(deltaTime) {
@@ -92,6 +94,7 @@ export default class Game {
     }
     
     clear() {
+        this.collCtx.clearRect(0, 0, this.collisionCanvas.width, this.collisionCanvas.height)
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     }
 }
