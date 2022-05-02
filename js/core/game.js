@@ -35,7 +35,6 @@ export default class Game {
 
     addBoom({x, y, size}) {
         this.booms.push(new Boom(x, y, size))
-        console.log(this.booms);
     }
 
     removeRaven(index) {

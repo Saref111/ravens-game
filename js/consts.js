@@ -9,6 +9,7 @@ export const BoomEnum = {
     HEIGHT: 90,
     MAX_FRAME_X: 5,
     SPRITE_SRC: './assets/boom.png',
+    AUDIO_SRC: './assets/boom.wav',
 }
 
 export const FPS = 4
